@@ -42,6 +42,7 @@ public class AddressBook {
     private static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
 
     /**
+    /**
      * Version info of the program.
      */
     private static final String VERSION = "AddessBook Level 1 - Version 1.0";
@@ -450,7 +451,7 @@ public class AddressBook {
      * @return feedback display message for the operation result
      */
     private static String executeFindPersons(String commandArgs) {
-        final Set<String> keywords = extractKeywordsFromFindPersonArgs(commandArgs);
+        final Set<String> keywords = extractKeywordsFromFindPersonArgs(toLowercase(commandArgs));
         final ArrayList<String[]> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
         showToUser(personsFound);
         return getMessageForPersonsDisplayedSummary(personsFound);
@@ -479,13 +480,13 @@ public class AddressBook {
     /**
      * Retrieves all persons in the full model whose names contain some of the specified keywords.
      *
-     * @param keywords for searching
+     * @param keywords for searching (all lower-case)
      * @return list of persons in full model with name containing some of the keywords
      */
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
-            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
+            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(toLowercase(getNameFromPerson(person))));
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
             }
@@ -1163,5 +1164,16 @@ public class AddressBook {
     private static ArrayList<String> splitByWhitespace(String toSplit) {
         return new ArrayList<>(Arrays.asList(toSplit.trim().split("\\s+")));
     }
+
+    /**
+     * Turns source string into lowercase
+     *
+     * @param s source string (with both upper and lower case)
+     * @return lowercase string
+     */
+    private static String toLowercase(String s) {
+        return s.toLowerCase();
+    }
+
 
 }
