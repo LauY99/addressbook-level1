@@ -444,7 +444,8 @@ public class AddressBook {
      * @return feedback display message for the operation result
      */
     private static String executeFindPersons(String commandArgs) {
-        final Set<String> keywords = extractKeywordsFromFindPersonArgs(toLowercase(commandArgs));
+        String lowercaseCommandArgs = toLowercase(commandArgs);
+        final Set<String> keywords = extractKeywordsFromFindPersonArgs(lowercaseCommandArgs);
         final ArrayList<String[]> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
         showToUser(personsFound);
         return getMessageForPersonsDisplayedSummary(personsFound);
