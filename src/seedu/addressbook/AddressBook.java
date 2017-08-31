@@ -311,7 +311,11 @@ public class AddressBook {
         } catch (InvalidPathException ipe) {
             return false;
         }
-        return hasValidParentDirectory(filePathToValidate) && hasValidFileName(filePathToValidate);
+
+        boolean isValidDirectory = hasValidParentDirectory(filePathToValidate);
+        boolean isValidName = hasValidFileName(filePathToValidate);
+
+        return isValidDirectory && isValidName;
     }
 
     /**
